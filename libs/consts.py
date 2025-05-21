@@ -5,7 +5,7 @@ class consts():
 	This class contains the constants used in the application.
 	"""
 	CHANNEL			= 'Release'
-	SEMVER			= '0.9.9'
+	SEMVER			= '1.0.0'
 	VERSION 		= {
 		'channel': CHANNEL,
 		'full': f'{CHANNEL}/{SEMVER}',
