@@ -202,6 +202,7 @@ class setup():
 			##### SETUP 1 #####
 			# 1
 			if not defaultSettings:
+				print('\n')
 				checkUpdatesAtStartup = setup.getUserInput(
 					f'{st.RESET_ALL}{fg.LIGHTGREEN_EX}Setup 1 - Main Settings - Step 1 of 6{st.RESET_ALL}',
 					f'Check for updates on startup?\n'
@@ -456,9 +457,7 @@ class setup():
 							f'"{st.RESET_ALL}{st.BRIGHT}{fg.LIGHTGREEN_EX}{p.ED_OPTIONS_BACKUP}{st.RESET_ALL}".\nNo need to create it again.',
 							'info'
 							)
-						return
 
-					
 					print('\n')
 					utils.uprint(
 						f'To use this feature you\'ll need to follow below instructions {st.BRIGHT}carefully{st.RESET_ALL}.',
@@ -603,8 +602,6 @@ class setup():
 			utils.uprint('Standby...', 'info')
 			time.sleep(2)
 
-			VERSION = c.VERSION
-
 			confContent = {
 				'apps': [
 					{
@@ -621,7 +618,7 @@ class setup():
 					'closeAppsOnExit': 				closeAppsOnExit,
 					'gameStartTimeout': 			gameStartTimeout,
 					'runElevated': 					runElevated,
-					'vrCompatible': 				vrCompatible,
+					'vrCompatible': 				vrCompatible
 				},
 				'vrSettings': {
 					'edOptionsFolderCopy': 			edOptionsFolderCopy,
