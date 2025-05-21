@@ -138,9 +138,6 @@ This entire project is **[UNLICENSED]** - I don't care what you do with it and h
 
 To learn more visit <https://unlicense.org/>
 
----
-[Back to top &uarr;]
-
 [GitHub Downloads Total]: https://img.shields.io/github/downloads/devmapall98/runED/total
 [GitHub Issues or Pull Requests]: https://img.shields.io/github/issues/devmapall98/runED
 [GitHub Release]: https://shields.io/github/v/release/devmapall98/runED?include_prereleases&sort=semver&label=latest%20version&link=https%3A%2F%2Fgithub.com%2Fdevmapall98%2FrunED%2Freleases%2Flatest
