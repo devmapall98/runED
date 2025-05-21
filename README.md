@@ -14,7 +14,7 @@ If you don't need to launch anything **elevated** ("as admin"), then *rfvgyhn's*
 ## Table of Contents
 
 - [Installation]
-	 - [Configuration]
+- [Configuration]
 - [Some notes]
 - [FAQ]
 - [License]
