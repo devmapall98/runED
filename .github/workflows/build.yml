@@ -1,0 +1,100 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "Release/*"
+  workflow_dispatch:
+
+jobs:
+  variables:
+    name: Assign variables
+    outputs:
+      sem_ver: ${{ steps.var.outputs.sem_ver }}
+      path_name: "runED_${{ steps.var.outputs.sem_ver }}"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Setting global variables
+        uses: actions/github-script@v7
+        id: var
+        with:
+          script: |
+            core.setOutput('sem_ver', '${{ github.ref_name }}'.replaceAll('Release\/', ''))
+
+  windows_build:
+    needs: [variables]
+    name: Build and Zip
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: powershell
+
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+        with:
+          submodules: true
+
+      - uses: actions/setup-python@v5
+        name: Setup Python
+        with:
+          python-version-file: '.python-version'
+          architecture: "x86"
+          cache: 'pip' # caching pip dependencies
+
+      - name: Install python requirements
+        run: |
+          pip install -r requirements.txt
+
+      - name: Build runED
+        run: |
+          pyinstaller main.py --name runED --icon img\runED.ico --workpath build --contents-directory . --distpath .\dist --clean
+
+      - name: Add files to dist
+        run: |
+          $files = ( 'CHANGELOG.md', 'README.md', 'UNLICENSE' ); foreach ( $file in $files ) { Copy-Item -Path $file -Destination '.\dist\runED\' }
+
+      - name: Rename app folder
+        run: |
+          Rename-Item -Path ".\dist\runED" -NewName "${{ needs.variables.outputs.path_name }}"
+
+      - name: Zip it
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          path: './dist/${{ needs.variables.outputs.path_name }}/'
+          filename: 'runED/runED-release-${{ needs.variables.outputs.sem_ver }}.zip'
+
+      - name: Upload build files
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-files-windows
+          path: |
+              runED\runED-release-*.zip
+
+  release:
+    name: Draft Release
+    runs-on: ubuntu-latest
+    needs: windows_build
+
+    steps:
+      - name: Download build files
+        uses: actions/download-artifact@v4
+        with:
+          name: built-files-windows
+          path: ./
+
+      - name: Hash files
+        run: sha256sum runED-release-*.zip > ./hashes-sha256.sum
+
+      - name: Create draft release
+        uses: "softprops/action-gh-release@v2"
+        if: "${{ github.event_name != 'workflow_dispatch' }}"
+        with:
+          token: "${{secrets.GITHUB_TOKEN}}"
+          draft: true
+          prerelease: true
+          files: |
+            ./runED-release-*.zip
+            ./hashes-sha256.sum
