@@ -14,5 +14,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 First release!
 
-[Release/1.0.0]: https://github.com/devmapall98/runED/releases/tag/Release%2F1.0.1
+[Release/1.0.1]: https://github.com/devmapall98/runED/releases/tag/Release%2F1.0.1
 [Release/1.0.0]: https://github.com/devmapall98/runED/releases/tag/Release%2F1.0.0
