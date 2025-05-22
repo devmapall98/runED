@@ -1,13 +1,6 @@
 name: Build-DEV
 
 on:
-  push:
-    tags:
-      - "*"
-    branches:
-      - "dev*"
-      - "feature*"
-      - "beta*"
   workflow_dispatch:
 
 jobs:
